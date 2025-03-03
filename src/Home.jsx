@@ -1,7 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import MovieDetail from "./MovieDetail";
 
 const API_KEY = "f52136d9";
 const API_URL = "https://www.omdbapi.com/";
@@ -14,7 +13,7 @@ function Home() {
 
   const searchMovies = async () => {
     if (!searchTerm.trim()) return;
-    
+
     setLoading(true);
     setError("");
 
@@ -36,7 +35,7 @@ function Home() {
   return (
     <div className="p-5 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold text-center">Movie Search</h1>
-      
+
       <div className="flex gap-2 my-4">
         <input
           type="text"
@@ -55,12 +54,10 @@ function Home() {
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {movies.map((movie) => (
-          <Link key={movie.imdbID} to={`/movie/${movie.imdbID}`}>
-            <div className="border p-2 cursor-pointer">
-              <img src={movie.Poster} alt={movie.Title} className="w-full h-40 object-cover" />
-              <h2 className="text-lg font-bold mt-2">{movie.Title}</h2>
-              <p>{movie.Year}</p>
-            </div>
+          <Link key={movie.imdbID} to={`/movie/${movie.imdbID}`} className="border p-2 block">
+            <img src={movie.Poster} alt={movie.Title} className="w-full h-40 object-cover" />
+            <h2 className="text-lg font-bold mt-2">{movie.Title}</h2>
+            <p>{movie.Year}</p>
           </Link>
         ))}
       </div>
@@ -68,15 +65,4 @@ function Home() {
   );
 }
 
-function App() {
-  return (
- 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movie/:id" element={<MovieDetail />} />
-      </Routes>
- 
-  );
-}
-
-export default App;
+export default Home;
